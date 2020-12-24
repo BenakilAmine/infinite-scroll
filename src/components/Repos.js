@@ -19,12 +19,13 @@ class Repos extends Component {
     render() {
         if (!this.props.entries && this.props.loading) return <p>Loading...</p>;
         const repos = this.props.entries.edges ||[];
+        
         return (
             <ul>
                 {repos.map(({node}, idx) => (
                     <li key={idx}>
                         <h3>
-                            {node.name} - {node.owner.login}
+                            {node.name, console.log(this)} - {node.owner.login}
                         </h3>
                         <p>{node.description}</p>
                         <p>

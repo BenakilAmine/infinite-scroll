@@ -9,7 +9,9 @@ import reportWebVitals from './reportWebVitals';
 
 const client = new AppolloClient({
   uri:"https://api.github.com/graphql",
-  headers: "Bearer 7b5e49f8d384cd74c06c267c477cfdef1034f36f"
+  headers: {
+    Authorization:"Bearer c6efc88c6e56b40b62e4b572588225427dd17fdd"
+  }
 })
 
 
