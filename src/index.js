@@ -2,26 +2,34 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import AppolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider,ApolloClient, InMemoryCache } from '@apollo/client';
 import reportWebVitals from './reportWebVitals';
+import { offsetLimitPagination } from "@apollo/client/utilities"
 
 
-const client = new AppolloClient({
-  uri:"https://api.github.com/graphql",
+
+
+const client = new ApolloClient({
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          questions: offsetLimitPagination(["type"]),
+        },
+      },
+    },
+  }),
+  uri:"http://localhost:4242/graphql",
   headers: {
-    Authorization:"Bearer c6efc88c6e56b40b62e4b572588225427dd17fdd"
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJja2l5b2o1aGIwMDAxOXZkdHF1N3RhZWtjIiwiaWF0IjoxNjA4NTYyNDIyfQ.pAQ-xdo9j83cGqt6Tz5LbYcgEc92NC8zkH_soKh2sXw"
   }
-})
-
-
-
+});
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <App />
   </ApolloProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

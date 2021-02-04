@@ -1,31 +1,11 @@
-import gql from "graphql-tag";
+import {gql} from "@apollo/client";
 
-export const trendingRepoGQLQuery = gql`
-query search($query: String!, $cursor: String) {
-    search(first: 15, query: $query, type: REPOSITORY, after: $cursor) {
-      pageInfo {
-        startCursor
-        endCursor
-        hasNextPage
-        hasPreviousPage
-      }
-      edges {
-        node {
-          ... on Repository {
-            name
-            owner {
-              login
-            }
-            description
-            stargazers {
-              totalCount
-            }
-            primaryLanguage {
-              name
-            }
-          }
-        }
-      }
-    }
+
+export const questionQuery = gql`
+query($offset: Int, $limit: Int) {
+  questions(id: "ckj16fywc4482pgyy4lfwacfe",offset: $offset, limit: $limit) {
+          id
+          value 
   }
+}
 `;

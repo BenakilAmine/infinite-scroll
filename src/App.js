@@ -1,67 +1,42 @@
 import logo from './logo.svg';
 import './App.css';
-import React,{Component} from 'react';
-import {Query} from 'react-apollo'
+import React from 'react';
+// import {Query, useQuery} from '@apollo/client'
 import Repos from './components/Repos'
-import { trendingRepoGQLQuery } from "./data/Query";
-import moment from "moment";
+// import { trendingRepoGQLQuery } from "./data/query";
+// import moment from "moment";
+import {  useQuery } from '@apollo/client';
+import { facebookQuery } from "./data/query";
 
 
 
-class App extends Component {
-  render() {
-    const date = new moment(new Date()).subtract(1,"weeks");
-    const formattedDate = date.format("YYYY-MM-DD");
-    const query = `created:>${formattedDate} sort:stars-desc`;
+const App = () => {
+  // const {data} = useQuery(trendingRepoGQLQuery)
+    // const date = new moment(new Date()).subtract(1,"weeks");
+    // const formattedDate = date.format("YYYY-MM-DD");
+    // const query = `created:>${formattedDate} sort:stars-desc`;
+    
+      // const {
+      //   data,
+      //   loading,
+      //   fetchMore,
+      // } = useQuery(facebookQuery);
+    
+      // if (loading) return <h1>Loading...</h1>;
+
+    
+      
     return (
-      <div>
-        <h1>Last Week Trending Repo</h1>
-        
-        <Query
-        notifyOnNetworkStatusChange={true}
-        query={trendingRepoGQLQuery}
-        variables={{query}}
-        >
-                    {({ data, loading, error, fetchMore }) => {
-            if (error) return <p>{error.message}</p>;
-            console.log(data)
-            const search = data.search;
-            return (
-              <Repos
-                loading={loading}
-                entries={search}
-                onLoadMore={() =>
-                  fetchMore({
-                    variables: {
-                      query,
-                      cursor: search.pageInfo.endCursor
-                    },
-                    updateQuery: (prevResult, { fetchMoreResult }) => {
-                      const newEdges = fetchMoreResult.search.edges;
-                      const pageInfo = fetchMoreResult.search.pageInfo;
-                      return newEdges.length
-                        ? {
-                            search: {
-                              __typename: prevResult.search.__typename,
-                              edges: [...prevResult.search.edges, ...newEdges],
-                              pageInfo
-                            }
-                          }
-                        : prevResult;
-                    }
-                  })
-                }
-              />
-            );
-            
-          }}
-          
-
-        </Query>
-        
-      </div>
+      <Repos
+      // entries={nodes}
+      // onLoadMore={() => fetchMore({
+      //   variables: {
+      //     offset: 10,
+      //       limit: 20
+      //   },
+      // })}
+      />
     );
-  }
 }
 
 export default App;
