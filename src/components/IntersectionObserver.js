@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 // import axios from 'axios';
 import {  useQuery } from '@apollo/client';
-import { questionQuery } from "../data/query";
+import { GET_MESSAGES } from "../data/query";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState(["hello"]);
   
   const page = useRef(1)
-  const { data, fetchMore } = useQuery(questionQuery, {
+  const { data, fetchMore } = useQuery(GET_MESSAGES, {
     variables: {
         // type: "PUBLIC",
         offset: 0,
